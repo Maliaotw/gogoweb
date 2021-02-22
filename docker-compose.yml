@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+
+  web:
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
+    restart: always
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.production
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+    command:
+      - bash
+      - -c
+      - |
+        python3 manage.py makemigrations
+        python3 manage.py migrate
+        exec uwsgi --http-socket :8000 --chdir /code --wsgi-file /code/config/wsgi.py --master --processes 4 --threads 2
+
+  mysql:
+    image: mysql:8.0.23
+    restart: always
+    env_file:
+      - .env
+    command: [ "--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci" ]
+
+
+  nginx:
+    image: nginx:1.19.5-alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - ./nginx/prod.conf:/etc/nginx/nginx.conf:ro
