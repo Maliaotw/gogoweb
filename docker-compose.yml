@@ -13,13 +13,7 @@ services:
       - .env
     depends_on:
       - mysql
-    command:
-      - bash
-      - -c
-      - |
-        python3 manage.py makemigrations
-        python3 manage.py migrate
-        exec uwsgi --http-socket :8000 --chdir /code --wsgi-file /code/config/wsgi.py --master --processes 4 --threads 2
+    command: /start
 
   mysql:
     image: mysql:8.0.23

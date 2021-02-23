@@ -16,6 +16,7 @@ DJANGO_SECRET_KEY=
 # ------------------------------------------------------------------------------
 MYSQL_HOST=
 MYSQL_DATABASE=
+MYSQL_TEST_DATABASE=
 MYSQL_USER=
 MYSQL_PORT=
 MYSQL_ROOT_PASSWORD=

@@ -6,7 +6,6 @@ services:
     build:
       context: .
       dockerfile: ./web/Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
     restart: always
     env_file:
       - .env
@@ -14,6 +13,12 @@ services:
       - "8000:8000"
     depends_on:
       - mysql
+    command:
+      - bash
+      - -c
+      - |
+        python manage.py runserver 0.0.0.0:8000
+
 
   mysql:
     image: mysql:8.0.23

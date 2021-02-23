@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+python manage.py makemigrations
+python manage.py migrate
+
+exec uwsgi --http-socket :8000 --chdir /code --wsgi-file /code/config/wsgi.py --master --processes 4 --threads 2
