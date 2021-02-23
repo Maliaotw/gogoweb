@@ -26,8 +26,12 @@ services:
     restart: always
     env_file:
       - .env
-    command: [ "--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci" ]
-
+    entrypoint:
+      - bash
+      - -c
+      - |
+        echo "CREATE DATABASE IF NOT EXISTS $MYSQL_TEST_DATABASE; GRANT ALL ON *.* TO 'user'@'%'; flush privileges;" > /docker-entrypoint-initdb.d/init.sql;
+        /usr/local/bin/docker-entrypoint.sh --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
   nginx:
     image: nginx:1.19.5-alpine

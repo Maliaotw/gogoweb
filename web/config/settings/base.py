@@ -15,7 +15,6 @@ import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 env = environ.Env()
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -122,4 +121,5 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
