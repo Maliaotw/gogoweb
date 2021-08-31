@@ -12,13 +12,25 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import environ
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-env = environ.Env()
+PROJECT_DIR = os.path.dirname(BASE_DIR)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'm%jef&3%k98a5j_iq-c3!j6jimp*qmrgodkig&h7r97%deb^v^'
+#
+sys.path.insert(0, os.path.join(PROJECT_DIR, 'apps'))
+
+env = environ.Env()
+env_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(env_file):
+    # Use a local secret file, if provided
+    env.read_env(env_file)
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
+
+SECRET_KEY = env("DJANGO_SECRET_KEY", default='dzzj04$)w*(r2ihr$m-3$i)ts-(&xsog_u!@^87a889$u)32wm')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,8 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'app.apps.AppConfig',
+    'apps.app',
+    'apps.user',
+
 ]
+
+AUTH_USER_MODEL = "user.UserProfile"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -99,9 +116,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'zh-hans'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -113,13 +129,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_DIR, 'static'),  # add statics path
+)
+STATIC_ROOT = os.path.join(PROJECT_DIR, "data", "static")
 
+# Media files (File, ImageField) will be save these
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(PROJECT_DIR, "data", 'media')
 
+LOGIN_URL = "/login/"
 
 REST_FRAMEWORK = {
-
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
+
+
+

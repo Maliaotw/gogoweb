@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from . import models
-from . import serializers
+from apps.app import models
+from apps.app import serializers
 
 from rest_framework import viewsets
 from rest_framework.pagination import LimitOffsetPagination

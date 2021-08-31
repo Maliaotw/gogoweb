@@ -23,11 +23,9 @@ MYSQL_ROOT_PASSWORD=
 MYSQL_PASSWORD=
 ```
 
+
 # Deploy
 
 ```
 docker-compose up --build -d
 ```
-
-123
-456

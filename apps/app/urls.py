@@ -1,6 +1,6 @@
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
-from . import views
+from apps.app import views
 
 # viewset 配置路由
 router = DefaultRouter()

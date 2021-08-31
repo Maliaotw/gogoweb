@@ -1,12 +1,18 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
+
+# custom
+.idea
+.env
+Coding_Exercise_v0.2.md
+doc
+ex-scriptes
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-.idea
-.env
-Coding_Exercise_v0.2.md
+
 
 # C extensions
 *.so
